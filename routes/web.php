@@ -25,7 +25,11 @@ Route::get('/backend/home', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-Route::resource( '/backend/user' , 'UserController' );
+    Route::resource('/backend/user', 'UserController');
+    Route::get('/user/profil', 'ProfilUpdateController@profil');
+    Route::post('/user/update-profil/{id}', 'ProfilUpdateController@ubah_profil');
+    Route::get('/user/password', 'ProfilUpdateController@password');
+    Route::post('/user/ubah-password', 'ProfilUpdateController@ubah_password');
 });
 
 Auth::routes();

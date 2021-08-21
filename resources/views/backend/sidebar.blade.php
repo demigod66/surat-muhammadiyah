@@ -13,8 +13,8 @@
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Setting</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{{ route('user.index') }}">Manajemen User</a></li>
-                  <li><a class="nav-link" href="layout-transparent.html">Transparent Sidebar</a></li>
-                  <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
+                  <li><a class="nav-link" href="{{ url('user/profil') }}">Setting Profil</a></li>
+                  <li><a class="nav-link" href="{{ url('user/password') }}">Password</a></li>
                 </ul>
               </li>
             </ul>
