@@ -15,8 +15,8 @@ class SuratKeluar extends Model
         'isi',
         'kode',
         'tgl_catat',
-        'tlg_surat',
+        'tgl_surat',
         'filekeluar',
         'keterangan'
-    ]
+    ];
 }

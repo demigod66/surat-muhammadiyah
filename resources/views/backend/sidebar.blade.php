@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/home" class="brand-link">
-      <img src="{{ asset('backend/assets/dist/img/smansabanko.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{ asset('backend/assets/images/logo.jpg')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">SI-MART</span>
 
     </a>
@@ -30,7 +30,7 @@
         </li>
         <li class="nav-header">Profil Instansi</li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('instansi.index') }}" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Instansi
@@ -54,7 +54,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('suratkeluar.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Surat Keluar</p>
                 </a>

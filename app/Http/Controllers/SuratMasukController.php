@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Instansi;
 use Illuminate\Http\Request;
 use App\Models\Klasifikasi;
 use App\Models\SuratMasuk;
@@ -111,7 +112,8 @@ class SuratMasukController extends Controller
 
     public function agendamasuk_pdf(){
         $suratmasuk = SuratMasuk::all();
-        $pdf = PDF::loadview('backend.surat_masuk.printagenda', compact('suratmasuk','inst'))->setPaper('A4','potrait');
+        $inst = Instansi::first();
+        $pdf = PDF::loadview('admin.suratmasuk.print', compact('suratmasuk','inst'))->setPaper('A4','potrait');
         return $pdf->stream( "agenda-suratmasuk.pdf", array("Attachment" => false));
         exit(0);
     }
