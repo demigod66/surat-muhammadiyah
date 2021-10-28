@@ -4,30 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{SuratKeluar, Klasifikasi};
-use Yajra\DataTables\Facades\DataTables;
 
 class SuratKeluarController extends Controller
 {
-
     public function index()
     {
         $suratkeluar = SuratKeluar::all();
-        if (Request()->ajax()) {
-            return DataTables::of($suratkeluar)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-
-                    $btn =  '<a href="'.route('suratkeluar.edit', $row->id).'" title="Ubah" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
-                    $btn = $btn . ' <a href="'.asset($row->filekeluar).'" title="Unduh" class="edit btn btn-warning btn-sm"><i class="fas fa-download"></i></a> ';
-
-                    $btn = $btn . ' <a href="javascript:void(0)" title="Hapus" class="btn btn-danger btn-sm" onclick="hapus('."'".$row->id."'".')"><i class="fas fa-trash"></i></a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-        return view('admin.suratkeluar.index');
+        return view('admin.suratkeluar.index', compact('suratkeluar'));
     }
 
     public function create()
@@ -35,7 +18,6 @@ class SuratKeluarController extends Controller
         $klasifikasi = Klasifikasi::all();
         return view('admin.suratkeluar.create', compact('klasifikasi'));
     }
-
 
     public function store(Request $request)
     {
@@ -47,14 +29,14 @@ class SuratKeluarController extends Controller
             'tgl_surat' => 'required',
             'tgl_catat' => 'required',
             'keterangan' => 'required',
-            'file_masuk' => 'required'
+            'file_keluar' => 'required|mimes:pdf,doc,jpg,jpeg,png,docx'
         ]);
 
         $file_keluar = $request->file_keluar;
         $new_file = time(). $file_keluar->getClientOriginalName();
         $file_keluar->move('uploads/suratkeluar/', $new_file);
 
-        SuratKeluar::created([
+        SuratKeluar::create([
             'no_surat' => $request->no_surat,
             'tujuan_surat' => $request->tujuan_surat,
             'isi' => $request->isisurat,
@@ -64,27 +46,56 @@ class SuratKeluarController extends Controller
             'filekeluar' => 'uploads/suratkeluar/' .$new_file,
             'keterangan' => $request->keterangan
         ]);
-    }
 
-
-    public function show($id)
-    {
-        //
+        return redirect('suratkeluar')->with('pesan', 'Berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        //
+        $suratkeluar = SuratKeluar::findOrFail($id);
+        $klasifikasi = Klasifikasi::all();
+        return view('admin.suratkeluar.edit', compact('suratkeluar', 'klasifikasi'));
     }
-
 
     public function update(Request $request, $id)
     {
-        //
+        request()->validate([
+            'no_surat' => 'required',
+            'isisurat' => 'required',
+            'klasifikasi' => 'required',
+            'tgl_surat' => 'required',
+            'tgl_catat' => 'required',
+            'keterangan' => 'required',
+            'file_keluar' => 'mimes:pdf,doc,jpg,jpeg,png,docx'
+        ]);
+
+        $suratkeluar = SuratKeluar::findOrFail($id);
+
+        if ($request->has('file_keluar')) {
+            $file = $request->file_keluar;
+            $new_file = Str::random(16) .$file->getClientOriginalName();
+            $file->move('uploads/suratkeluar/', $new_file);
+
+            if ($surakeluar->filekeluar != '') {
+                unlink($surakeluar->filekeluar);
+            }
+        }
+
+        $suratkeluar->isi = $request->isisurat;
+        $suratkeluar->kode = $request->klasifikasi;
+        $suratkeluar->keterangan = $request->keterangan;
+        $suratkeluar->filekeluar = $request->file_keluar != '' ? $new_file : $suratkeluar->filekeluar;
+        $suratkeluar->save();
+
+        return redirect('suratkeluar')->with('pesan', 'Berhasil diupdate');
     }
 
     public function destroy($id)
     {
-        //
+        $suratkeluar = SuratKeluar::findOrFail($id);
+        unlink($suratkeluar->filekeluar);
+        $suratkeluar->delete();
+
+        return redirect('suratkeluar')->with('pesan', 'Berhasil dihapus');
     }
 }

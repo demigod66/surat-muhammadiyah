@@ -1,4 +1,6 @@
 @extends('backend.template')
+@section('sub-judul','Surat Keluar')
+@section('halaman-sekarang','Surat Keluar')
 @section('content')
 
 <div class="row">
@@ -6,15 +8,28 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <a href="{{ route('suratkeluar.create') }}" class="btn btn-primary btn-sm" ><i
-                            class="fas fa-pencil-alt"></i>Tambah</a>
+                    <a href="{{ route('suratkeluar.create') }}" class="btn btn-primary btn-sm" ><i class="fas fa-plus"></i>    Tambah</a>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body table-responsive">
+
+                @if(session('pesan'))
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="alert alert-success alert-sm alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h5><i class="icon fas fa-check"></i> {{ session('pesan') }}!</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
                 <table id="example2" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th width="10%">No</th>
+                            <th width="5%">No</th>
                             <th>No. Surat</th>
                             <th>Tujuan Surat</th>
                             <th>Isi</th>
@@ -22,10 +37,29 @@
                             <th>Tgl. Catat</th>
                             <th>Tgl. Surat</th>
                             <th>Keterangan</th>
-                            <th width="10%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
+
+                        @foreach($suratkeluar as $sk)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $sk->no_surat }}</td>
+                            <td>{{ $sk->tujuan_surat }}</td>
+                            <td>{{ $sk->isi }}</td>
+                            <td>{{ $sk->kode }}</td>
+                            <td>{{ date('d-m-Y', strtotime($sk->tgl_catat)) }}</td>
+                            <td>{{ date('d-m-Y', strtotime($sk->tgl_surat)) }}</td>
+                            <td>{{ $sk->keterangan }}</td>
+                            <td>
+                                <a href="{{ route('suratkeluar.edit', $sk->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="{{ url('suratkeluar/delete', $sk->id) }}" onclick="return confirm('Yakin hapus?')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                <a href="{{ asset($sk->filekeluar) }}" class="btn btn-info btn-sm"><i class="fa fa-file"></i></a>
+                            </td>
+                        </tr>
+                        @endforeach
+                        
                     </tbody>
                 </table>
             </div>
@@ -33,110 +67,4 @@
     </div>
 </div>
 
-
-
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        table = $('#example2').DataTable({
-            processing: true,
-            serverside: true,
-            ajax: "{{ route('suratkeluar.index') }}",
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex'
-                },
-                {
-                    data: 'no_surat',
-                    name: 'no_surat'
-                },
-                {
-                    data: 'tujuan_surat',
-                    name: 'tujuan_surat'
-                },
-                {
-                    data: 'isi',
-                    name: 'isi'
-                },
-                {
-                    data: 'kode',
-                    name: 'kode'
-                },
-                {
-                    data: 'tgl_catat',
-                    name: 'tgl_catat'
-                },
-                {
-                    data: 'tgl_surat',
-                    name: 'tgl_surat'
-                },
-                {
-                    data: 'keterangan',
-                    name: 'keterangan'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
-            ],
-            order: [
-                [0, 'asc']
-            ]
-        });
-    });
-    function hapus(id){
-      swal({
-        title: 'Apakah kamu yakin?',
-        type: 'warning',
-        showCancelButton: true,
-        allowOutsideClick: false,
-        allowEscapeKey: false,
-        allowEnterKey: false,
-        confirmButtonText: 'Ya',
-        cancelButtonText: 'Tidak',
-        buttons: true
-      }).then(function(){
-        $.ajax({
-          url : "user/"+id,
-          type: "delete",
-          dataType: "JSON",
-          success: function(){
-            swal({
-              title: 'Berhasil',
-              type: 'success',
-              allowOutsideClick: false,
-              allowEscapeKey: false,
-              allowEnterKey: false,
-            }).then(function(){
-              location.reload();
-            })
-          },
-          error: function (jqXHR, textStatus, errorThrown){
-            swal({
-              title: 'Terjadi kesalahan',
-              type: 'error',
-              allowOutsideClick: false,
-              allowEscapeKey: false,
-              allowEnterKey: false,
-            });
-          }
-        });
-      }, function (dismiss) {
-        if (dismiss === 'cancel') {
-          swal({
-            title: 'Batal',
-            type: 'error',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            allowEnterKey: false,
-          })
-        }
-      });
-    }
-    </script>
 @endsection
-
-
-

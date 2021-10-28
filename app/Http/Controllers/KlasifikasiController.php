@@ -8,83 +8,78 @@ use App\Imports\KlasifikasiImport;
 use App\Models\Klasifikasi;
 use Illuminate\Http\Request;
 
-
 class KlasifikasiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $klasifikasi = Klasifikasi::all();
-        if (Request()->ajax()) {
-            return DataTables::of($klasifikasi)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-
-                    $btn =  '<a href="javascript:void(0)" data-toggle="tooltip"  onClick="get(' . $row->id . ')" data-original-title="Edit" class="edit btn btn-primary btn-sm editCategory"><i class="fas fa-edit"></i></a>';
-
-                    $btn = $btn . ' <a href="javascript:void(0)" title="Delete" class="btn btn-danger btn-sm" onClick="hapus(' . $row->id . ')"><i class="fas fa-trash"></i></a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
         return view('admin.klasifikasi.index' , compact('klasifikasi'));
+    }
+
+    public function create(){
+        return view('admin.klasifikasi.create');
     }
 
     public function store(Request $request)
     {
-        Klasifikasi::updateOrCreate(
-            ['id' => $request->id],
-            [
-                'nama' => $request->nama,
-                'kode' => $request->kode,
-                'uraian' => $request->uraian,
-            ],
-        );
+        $request->validate([
+            'nama' => 'required',
+            'kode' => 'required',
+            'uraian' => 'required'
+        ]);
 
-        echo json_encode(["status" => TRUE]);
+        Klasifikasi::create([
+            'nama' => $request->nama,
+            'kode' => $request->kode,
+            'uraian' => $request->uraian
+        ]);
 
-}
+        return redirect('backend/klasifikasi')->with('pesan', 'Berhasil ditambahkan');
+    }
 
     public function edit($id)
     {
-        if( Auth::user()->tipe == 1 ){
-        $klasifikasi = Klasifikasi::find($id);
-        return response()->json($klasifikasi);
-        }
-        else {
-            return view('backend.error');
-        }
+        $klasifikasi = Klasifikasi::findOrFail($id);
+        return view('admin.klasifikasi.edit', compact('klasifikasi'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $klasifikasi = Klasifikasi::findOrFail($id);
 
+        $request->validate([
+            'nama' => 'required',
+            'kode' => 'required',
+            'uraian' => 'required'
+        ]);
+
+        $klasifikasi->nama = $request->nama;
+        $klasifikasi->kode = $request->kode;
+        $klasifikasi->uraian = $request->uraian;
+
+        $klasifikasi->save();
+
+        return redirect('backend/klasifikasi')->with('pesan', 'Berhasil diupdate');
+    }
 
     public function destroy($id)
     {
-      $klasifikasi =  Klasifikasi::findOrFail($id)->delete();
-        // unlink('uploads/klasifikasi_file/'.$klasifikasi->);
-        echo json_encode(["status" => TRUE]);
+        $klasifikasi =  Klasifikasi::findOrFail($id)->delete();
+        return redirect('backend/klasifikasi')->with('pesan', 'Berhasil dihapus');
     }
 
 
-    //function untuk import excel
     public function import(Request $request){
-       // validasi
-		$this->validate($request, [
-			'klasifikasi' => 'required|mimes:csv,xls,xlsx'
-		]);
-		$file = $request->file('klasifikasi');
-		$nama_file = rand().$file->getClientOriginalName();
-		$file->move('klasifikasi_file',$nama_file);
-		Excel::import(new KlasifikasiImport, public_path('/klasifikasi_file/'.$nama_file));
+        $this->validate($request, [
+            'klasifikasi' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('klasifikasi');
+        $nama_file = rand().$file->getClientOriginalName();
+        $file->move('klasifikasi_file',$nama_file);
+        Excel::import(new KlasifikasiImport, public_path('/klasifikasi_file/'.$nama_file));
         return redirect()->back()->with('sukses', 'Import Data Berhasil');
-		return view('klasifikasi.index');
+        return view('klasifikasi.index');
 
     }
 }

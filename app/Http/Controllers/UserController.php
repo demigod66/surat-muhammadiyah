@@ -8,36 +8,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $user = User::all();
-        if (Request()->ajax()) {
-            return DataTables::of($user)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-
-                    $btn =  '<a href="'.route('user.edit', $row->id).'" title="Ubah" class="edit btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
-
-                    $btn = $btn . ' <a href="javascript:void(0)" title="Delete" class="btn btn-danger btn-sm" onClick="hapus(' . $row->id . ')"><i class="fas fa-trash"></i></a>';
-
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-        return view('admin.user.index');
+        return view('admin.user.index', compact('user'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.user.create');
@@ -68,12 +44,6 @@ class UserController extends Controller
 
         echo json_encode(["status" => TRUE]);
     }
-
-    public function show($id)
-    {
-        //
-    }
-
 
     public function edit($id)
     {

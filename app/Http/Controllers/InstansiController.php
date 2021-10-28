@@ -7,12 +7,10 @@ use Illuminate\Http\Request;
 
 class InstansiController extends Controller
 {
-
     public function index(){
         $instansi = Instansi::where('id',1)->first();
         return view('admin.instansi.index', compact('instansi'));
     }
-
 
     public function show()
     {
@@ -41,10 +39,9 @@ class InstansiController extends Controller
             }
 
             $file_data['file'] = 'uploads/logo/'. $new_file;
-            Instansi::whereId($id)->update($file_data);
         }
 
-            $file_data = [
+        $file_data = [
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'pimpinan' => $request->pimpinan,
@@ -52,11 +49,7 @@ class InstansiController extends Controller
         ];
 
         Instansi::whereId($id)->update($file_data);
-        session()->flash('success', 'Berhasil Disimpan');
-        return redirect()->back()->with('success', 'Data Berhasil Di UPdate');
-
-
-
-        }
-
+        return redirect('instansi');
     }
+
+}
