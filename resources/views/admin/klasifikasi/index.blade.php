@@ -1,6 +1,5 @@
-@extends('backend.template')
+@extends('template')
 @section('sub-judul','Klasifikasi')
-@section('halaman-sekarang','Klasifikasi')
 @section('content')
 
 <div class="row">
@@ -8,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <a class="btn btn-primary btn-sm" href="{{ route('klasifikasi.create') }}"><i class="fas fa-plus-square"></i>    Tambah</a>
+                    <a class="btn btn-primary btn-sm" href="{{ url('klasifikasi/create') }}">Tambah</a>
                 </div>
             </div>
             <div class="card-body table-responsive">
@@ -33,7 +32,7 @@
                             <th>Nama</th>
                             <th>Kode</th>
                             <th>Uraian</th>
-                            <th width="10%">Aksi</th>
+                            <th width="15%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,8 +43,8 @@
                             <td>{{ $ka->kode }}</td>
                             <td>{{ $ka->uraian }}</td>
                             <td>
-                                <a href="{{ route('klasifikasi.edit', $ka->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="{{ url('backend/klasifikasi/delete', $ka->id) }}" onclick="return confirm('Yakin hapus?')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                <a href="{{ url('klasifikasi/edit', $ka->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{{ url('klasifikasi/delete', $ka->id) }}" class="btn btn-danger btn-sm">Hapus</a>
                             </td>
                         </tr>
                         @endforeach

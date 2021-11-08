@@ -1,6 +1,5 @@
-@extends('backend.template')
+@extends('template')
 @section('sub-judul','Edit Instansi')
-@section('halaman-sekarang','Edit Instansi')
 @section('content')
 
 <section class="content pt-2">
@@ -9,7 +8,7 @@
       <div class="card">
         <div class="card-header d-flex p-0">
           <ul class="nav nav-pills p-2">
-            <a href="{{ route('instansi.index') }}" class="btn btn-warning btn-sm">Lihat Profil</a>
+            <a href="{{ url('instansi') }}" class="btn btn-warning btn-sm">Lihat Profil</a>
           </ul>
         </div>
         <div class="card-body">
@@ -17,9 +16,8 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab_1">
 
-              <form action="{{ route('instansi.update', $instansi->id) }}" class="form-horizontal" enctype="multipart/form-data" method="POST">
+              <form action="{{ url('instansi/update', $instansi->id) }}" class="form-horizontal" enctype="multipart/form-data" method="POST">
                 @csrf
-                @method('PUT')
                 <div class="row justify-content-center">
                   <div class="col-lg-8">
                     <div class="form-group">

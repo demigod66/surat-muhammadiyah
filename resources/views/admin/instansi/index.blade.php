@@ -1,6 +1,5 @@
-@extends('backend.template')
+@extends('template')
 @section('sub-judul','Instansi')
-@section('halaman-sekarang','Instansi')
 @section('content')
 
 <section class="content card" style="padding: 10px 10px 10px 10px ">
@@ -36,7 +35,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <a class="btn btn-primary btn-sm" href="{{ route('instansi.show', $instansi->id) }}" role="button">Setting Data Instansi</a>
+        <a class="btn btn-primary btn-sm" href="{{ url('instansi/show') }}" role="button">Setting Data Instansi</a>
     </div>
 </section>
 

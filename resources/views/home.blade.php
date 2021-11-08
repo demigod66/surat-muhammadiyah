@@ -1,5 +1,5 @@
-@extends('backend.template')
-
+@extends('template')
+@section('sub-judul', 'Dashboard')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

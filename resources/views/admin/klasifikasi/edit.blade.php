@@ -1,6 +1,5 @@
-@extends('backend.template')
+@extends('template')
 @section('sub-judul','Edit Klasifikasi')
-@section('halaman-sekarang','Edit Klasifikasi')
 @section('content')
 
 <div class="row">
@@ -8,16 +7,15 @@
     <div class="card">
       <div class="card-header">
         <div class="float-right">
-          <a href="{{ route('klasifikasi.index') }}" class="btn btn-warning btn-sm">Kembali</a>
+          <a href="{{ url('klasifikasi') }}" class="btn btn-warning btn-sm">Kembali</a>
         </div>
       </div>
       <div class="card-body">
 
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <form class="form-horizontal" method="POST" action="{{ route('klasifikasi.update', $klasifikasi->id) }}" enctype="multipart/form-data">
+            <form class="form-horizontal" method="POST" action="{{ url('klasifikasi/update', $klasifikasi->id) }}" enctype="multipart/form-data">
               @csrf
-              @method('PATCH')
               <div class="form-group">
                 <label>Kode</label>
                 <input type="text" class="form-control" name="kode" id="kode" placeholder="Input Kode Klasifikasi" value="{{ $klasifikasi->kode }}" readonly>

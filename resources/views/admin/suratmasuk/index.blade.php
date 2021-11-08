@@ -1,6 +1,5 @@
-@extends('backend.template')
+@extends('template')
 @section('sub-judul','Surat Masuk')
-@section('halaman-sekarang','Surat Masuk')
 @section('content')
 
 <div class="row">
@@ -8,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <a href="{{ route('suratmasuk.create') }}" class="btn btn-primary btn-sm" ><i class="fas fa-plus"></i>    Tambah</a>
+                    <a href="{{ url('suratmasuk/create') }}" class="btn btn-primary btn-sm" >Tambah</a>
                 </div>
             </div>
             
@@ -49,13 +48,13 @@
                             <td>{{ $sm->no_surat }}</td>
                             <td>{{ $sm->asal_surat }}</td>
                             <td>{{ $sm->isi }}</td>
-                            <td>{{ $sm->kode }}</td>
+                            <td>{{ $sm->nama }}</td>
                             <td>{{ date('d-m-Y', strtotime($sm->tgl_surat)) }}</td>
                             <td>{{ date('d-m-Y', strtotime($sm->tgl_terima)) }}</td>
                             <td>{{ $sm->keterangan }}</td>
                             <td>
-                                <a href="{{ route('suratmasuk.edit', $sm->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="{{ url('suratmasuk/delete', $sm->id) }}" onclick="return confirm('Yakin hapus?')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                <a href="{{ url('suratmasuk/edit', $sm->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="{{ url('suratmasuk/delete', $sm->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                                 <a href="{{ asset($sm->file_masuk) }}" class="btn btn-info btn-sm"><i class="fa fa-file"></i></a>
                             </td>
                         </tr>

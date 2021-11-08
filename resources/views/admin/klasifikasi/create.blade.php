@@ -1,6 +1,5 @@
-@extends('backend.template')
+@extends('template')
 @section('sub-judul','Tambah Klasifikasi')
-@section('halaman-sekarang','Tambah Klasifikasi')
 @section('content')
 
 <div class="row">
@@ -8,14 +7,14 @@
     <div class="card">
       <div class="card-header">
         <div class="float-right">
-          <a href="{{ route('klasifikasi.index') }}" class="btn btn-warning btn-sm">Kembali</a>
+          <a href="{{ url('klasifikasi') }}" class="btn btn-warning btn-sm">Kembali</a>
         </div>
       </div>
       <div class="card-body">
 
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <form class="form-horizontal" method="POST" action="{{ route('klasifikasi.store') }}" enctype="multipart/form-data">
+            <form class="form-horizontal" method="POST" action="{{ url('klasifikasi/store') }}" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
                 <label>Kode</label>

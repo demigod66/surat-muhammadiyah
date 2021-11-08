@@ -1,6 +1,5 @@
-@extends('backend.template')
+@extends('template')
 @section('sub-judul','Agenda Surat Masuk')
-@section('halaman-sekarang','Agenda Surat Masuk')
 @section('content')
 
 <div class="row">
@@ -8,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <a href="{{ route('auth.cetak_pdf') }}" class="btn btn-danger btn-sm" target="_blank" role="button"><i class="fas fa-print"></i>    Cetak Pdf</a>
+                    <a href="{{ route('auth.cetak_pdf') }}" class="btn btn-danger btn-sm" target="_blank" role="button">Cetak Pdf</a>
                 </div>
             </div>
             <div class="card-body table-responsive">
@@ -33,7 +32,7 @@
                             <td>{{ $result->no_surat }}</td>
                             <td>{{ $result->asal_surat }}</td>
                             <td>{{ $result->isi }}</td>
-                            <td>{{ $result->kode }}</td>
+                            <td>{{ $result->nama }}</td>
                             <td>{{ $result->tgl_surat }}</td>
                             <td>{{ $result->tgl_terima }}</td>
                             <td>{{ $result->keterangan }}</td>

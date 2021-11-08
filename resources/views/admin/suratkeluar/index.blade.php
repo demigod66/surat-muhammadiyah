@@ -1,6 +1,5 @@
-@extends('backend.template')
+@extends('template')
 @section('sub-judul','Surat Keluar')
-@section('halaman-sekarang','Surat Keluar')
 @section('content')
 
 <div class="row">
@@ -8,7 +7,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
-                    <a href="{{ route('suratkeluar.create') }}" class="btn btn-primary btn-sm" ><i class="fas fa-plus"></i>    Tambah</a>
+                    <a href="{{ url('suratkeluar/create') }}" class="btn btn-primary btn-sm" >Tambah</a>
                 </div>
             </div>
             <div class="card-body table-responsive">
@@ -48,13 +47,13 @@
                             <td>{{ $sk->no_surat }}</td>
                             <td>{{ $sk->tujuan_surat }}</td>
                             <td>{{ $sk->isi }}</td>
-                            <td>{{ $sk->kode }}</td>
+                            <td>{{ $sk->nama }}</td>
                             <td>{{ date('d-m-Y', strtotime($sk->tgl_catat)) }}</td>
                             <td>{{ date('d-m-Y', strtotime($sk->tgl_surat)) }}</td>
                             <td>{{ $sk->keterangan }}</td>
                             <td>
-                                <a href="{{ route('suratkeluar.edit', $sk->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="{{ url('suratkeluar/delete', $sk->id) }}" onclick="return confirm('Yakin hapus?')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                <a href="{{ url('suratkeluar/edit', $sk->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="{{ url('suratkeluar/delete', $sk->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
                                 <a href="{{ asset($sk->filekeluar) }}" class="btn btn-info btn-sm"><i class="fa fa-file"></i></a>
                             </td>
                         </tr>
