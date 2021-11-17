@@ -48,19 +48,23 @@
         </a>
       </li>
 
+      @if(Auth::user()->tipe == 1)
       <li class="nav-item {{ Request::segment(1) == 'instansi' ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('instansi') }}">
           <i class="fas fa-landmark"></i>
           <span>Instansi</span>
         </a>
       </li>
+      @endif
 
+      @if(Auth::user()->tipe == 1)
       <li class="nav-item {{ Request::segment(1) == 'klasifikasi' ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('klasifikasi') }}">
           <i class="fas fa-landmark"></i>
           <span>Klasifikasi</span>
         </a>
       </li>
+      @endif
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -71,12 +75,15 @@
         <div id="collapseTwo" class="collapse {{ request()->is('suratmasuk') || request()->is('suratkeluar') ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item {{ request()->is('suratmasuk') ? 'active' : '' }}" href="{{ url('suratmasuk') }}">Surat Masuk</a>
+            @if(Auth::user()->tipe == 1)
             <a class="collapse-item {{ request()->is('suratkeluar') ? 'active' : '' }}" href="{{ url('suratkeluar') }}">Surat Keluar</a>
           </div>
+            @endif
         </div>
       </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
+      @if(Auth::user()->tipe == 1)
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
           <i class="fas fa-copy"></i>
@@ -89,6 +96,7 @@
           </div>
         </div>
       </li>
+      @endif
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
@@ -98,7 +106,9 @@
         </a>
         <div id="collapsePages" class="collapse {{ request()->is('user') || request()->is('user/profil') || request()->is('user/password') ? 'show' : '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
+            @if(Auth::user()->tipe == 1)
             <a class="collapse-item {{ request()->is('user') ? 'active' : '' }}" href="{{ url('user') }}">User</a>
+            @endif
             <a class="collapse-item {{ request()->is('user/profil') ? 'active' : '' }}" href="{{ url('user/profil') }}">Profil</a>
             <a class="collapse-item {{ request()->is('user/password') ? 'active' : '' }}" href="{{ url('user/password') }}">Password</a>
           </div>

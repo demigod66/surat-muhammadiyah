@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Instansi;
 use Illuminate\Http\Request;
+use Auth;
 
-class InstansiController extends Controller
-{
+class InstansiController extends Controller{
+    public function __construct(){
+        $this->middleware('admin');
+    }
+
 	public function index(){
 		$instansi = Instansi::where('id',1)->first();
 		return view('admin.instansi.index', compact('instansi'));

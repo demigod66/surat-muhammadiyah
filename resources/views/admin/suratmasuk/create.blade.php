@@ -55,11 +55,6 @@
                 <div class="text-danger">@error('tgl_surat'){{ $message }}@enderror</div>
               </div>
               <div class="form-group">
-                <label for="">Tanggal Terima</label>
-                <input type="date" name="tgl_terima" class="form-control" id="tgl_terima">
-                <div class="text-danger">@error('tgl_terima'){{ $message }}@enderror</div>
-              </div>
-              <div class="form-group">
                 <label>File</label>
                 <input type="file" name="file_masuk" id="file_masuk" class="form-control">
                 <div class="text-danger">@error('file_masuk'){{ $message }}@enderror</div>

@@ -9,6 +9,7 @@ use App\Models\User;
 class UserController extends Controller
 {
 	public function index() {
+        $this->middleware('admin');
 		$user = User::all();
 		return view('admin.user.index', compact('user'));
 	}

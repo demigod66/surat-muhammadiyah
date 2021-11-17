@@ -33,7 +33,7 @@
                 <select name="tipe" id="tipe" class="form-control">
                   <option value="">Pilih Tipe User</option>
                   <option value="1">Administrator</option>
-                  <option value="0">Pegawai</option>
+                  <option value="0">User</option>
                 </select>
                 <div class="text-danger">@error('tipe'){{ $message }}@enderror</div>
               </div>

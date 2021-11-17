@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Klasifikasi, SuratMasuk, Instansi};
+use App\Models\{Klasifikasi, SuratMasuk, Instansi, User, Disposisi};
+use Auth;
 use PDF;
 
-class SuratMasukController extends Controller
-{
+class SuratMasukController extends Controller {
     public function index(){
-        $suratmasuk = SuratMasuk::select('tbl_klasifikasi.nama', 'suratmasuk.*')->join('tbl_klasifikasi', 'tbl_klasifikasi.id', '=', 'suratmasuk.kode')->get();
+        if (Auth::user()->tipe == 1) {
+            $suratmasuk = SuratMasuk::select('tbl_klasifikasi.nama', 'suratmasuk.*', 'disposisi.suratmasuk_id', 'users.name')->join('tbl_klasifikasi', 'tbl_klasifikasi.id', '=', 'suratmasuk.kode')->join('disposisi', 'disposisi.suratmasuk_id', '=', 'suratmasuk.id', 'left')->join('users', 'users.id', '=', 'disposisi.tujuan', 'left')->get();
+        } else {
+            $suratmasuk = Disposisi::select('suratmasuk.*')->join('suratmasuk', 'suratmasuk.id', '=', 'disposisi.suratmasuk_id')->where('tujuan', Auth::user()->id)->get();
+        }
         return view('admin.suratmasuk.index', compact('suratmasuk'));
     }
 
@@ -25,7 +29,6 @@ class SuratMasukController extends Controller
             'isisurat' => 'required',
             'klasifikasi' => 'required',
             'tgl_surat' => 'required',
-            'tgl_terima' => 'required',
             'keterangan' => 'required',
             'file_masuk' => 'required|mimes:pdf,doc,jpg,jpeg,png,docx'
         ]);
@@ -40,7 +43,6 @@ class SuratMasukController extends Controller
             'isi' => $request->isisurat,
             'kode' => $request->klasifikasi,
             'tgl_surat' => $request->tgl_surat,
-            'tgl_terima' => $request->tgl_terima,
             'file_masuk' => 'uploads/suratmasuk/' .$new_file,
             'keterangan' => $request->keterangan
         ]);
@@ -92,7 +94,31 @@ class SuratMasukController extends Controller
         return redirect('suratmasuk')->with('pesan', 'Berhasil dihapus');
     }
 
+    public function disposisi($id){
+        $suratmasuk = SuratMasuk::findOrFail($id);
+        $user = User::all();
+
+        return view('admin.suratmasuk.disposisi', compact('suratmasuk', 'user'));
+    }
+
+    public function kirim(Request $request){
+        request()->validate([
+            'disposisi' => 'required',
+            'isi_disposisi' => 'required',
+        ]);
+
+        Disposisi::create([
+            'tujuan' => $request->disposisi,
+            'isi' => $request->isi_disposisi,
+            'users_id' => Auth::user()->id,
+            'suratmasuk_id' => $request->id
+        ]);
+
+        return redirect('suratmasuk')->with('pesan', 'Disposisi surat berhasil');
+    }
+
     public function agenda(){
+        $this->middleware('admin');
         $suratmasuk = SuratMasuk::select('tbl_klasifikasi.nama', 'suratmasuk.*')->join('tbl_klasifikasi', 'tbl_klasifikasi.id', '=', 'suratmasuk.kode')->get();
         return view('admin.suratmasuk.agenda', compact('suratmasuk'));
     }

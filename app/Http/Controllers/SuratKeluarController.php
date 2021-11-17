@@ -8,6 +8,10 @@ use PDF;
 
 class SuratKeluarController extends Controller
 {
+	public function __construct(){
+        $this->middleware('admin');
+    }
+    
 	public function index() {
 		$suratkeluar = SuratKeluar::select('tbl_klasifikasi.nama', 'suratkeluar.*')->join('tbl_klasifikasi', 'tbl_klasifikasi.id', '=', 'suratkeluar.kode')->get();
 		return view('admin.suratkeluar.index', compact('suratkeluar'));

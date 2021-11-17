@@ -14,7 +14,6 @@ class SuratMasuk extends Model
         'isi',
         'kode',
         'tgl_surat',
-        'tgl_terima',
         'file_masuk',
         'keterangan'
     ];

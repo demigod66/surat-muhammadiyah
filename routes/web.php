@@ -26,7 +26,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('suratmasuk/store', 'SuratMasukController@store');
     Route::get('suratmasuk/edit/{id}', 'SuratMasukController@edit');
     Route::post('suratmasuk/update/{id}', 'SuratMasukController@update');
-    Route::get('suratmasuk/delete/{suratmasuk:id}', 'SuratMasukController@destroy');
+    Route::get('suratmasuk/delete/{id}', 'SuratMasukController@destroy');
+    Route::get('suratmasuk/disposisi/{id}', 'SuratMasukController@disposisi');
+    Route::post('suratmasuk/disposisi/kirim', 'SuratMasukController@kirim');
     Route::get('suratmasuk/agenda', 'SuratMasukController@agenda')->name('suratmasuk.agenda');
     Route::get('suratmasuk/agendamasuk_pdf', 'SuratMasukController@agendamasuk_pdf')->name('auth.cetak_pdf');
 

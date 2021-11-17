@@ -7,6 +7,10 @@ use App\Models\Klasifikasi;
 
 class KlasifikasiController extends Controller
 {
+	public function __construct(){
+        $this->middleware('admin');
+    }
+    
 	public function index(){
 		$klasifikasi = Klasifikasi::all();
 		return view('admin.klasifikasi.index' , compact('klasifikasi'));

@@ -52,10 +52,6 @@
                 <input type="date" name="tgl_surat" class="form-control" id="tgl_surat" value="{{ $suratmasuk->tgl_surat }}" readonly>
               </div>
               <div class="form-group">
-                <label for="">Tanggal Terima</label>
-                <input type="date" name="tgl_terima" class="form-control" id="tgl_terima" value="{{ $suratmasuk->tgl_terima }}" readonly>
-              </div>
-              <div class="form-group">
                 <label>File</label>
                 <input type="file" name="file_masuk" id="file_masuk" class="form-control">
                 <small>

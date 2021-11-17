@@ -42,7 +42,7 @@
               <td>{{ $loop->iteration }}</td>
               <td>{{ $u->name }}</td>
               <td>{{ $u->email }}</td>
-              <td>{{ $u->tipe == 1 ? 'Tata Usaha' : 'Guru' }}</td>
+              <td>{{ $u->tipe == 1 ? 'Administrator' : 'User' }}</td>
               <td>
                 <a href="{{ url('user/edit', $u->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
                 <a href="{{ url('user/delete', $u->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>

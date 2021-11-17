@@ -7,12 +7,14 @@
         <div class="card">
             <div class="card-header">
                 <div class="float-right">
+                    @if(Auth::user()->tipe == 1)
                     <a href="{{ url('suratmasuk/create') }}" class="btn btn-primary btn-sm" >Tambah</a>
+                    @endif
                 </div>
             </div>
             
             <div class="card-body table-responsive">
-                
+
                 @if(session('pesan'))
                 <div class="container">
                     <div class="row">
@@ -33,10 +35,8 @@
                             <th>No. Surat</th>
                             <th>Asal Surat</th>
                             <th>Isi</th>
-                            <th>Kode</th>
                             <th>Tgl. Surat</th>
-                            <th>Tgl. Terima</th>
-                            <th>Keterangan</th>
+                            {!! Auth::user()->tipe == 1 ? '<th>Disposisi Saat Ini</th>' : ''!!}
                             <th width="15%">Aksi</th>
                         </tr>
                     </thead>
@@ -48,14 +48,23 @@
                             <td>{{ $sm->no_surat }}</td>
                             <td>{{ $sm->asal_surat }}</td>
                             <td>{{ $sm->isi }}</td>
-                            <td>{{ $sm->nama }}</td>
                             <td>{{ date('d-m-Y', strtotime($sm->tgl_surat)) }}</td>
-                            <td>{{ date('d-m-Y', strtotime($sm->tgl_terima)) }}</td>
-                            <td>{{ $sm->keterangan }}</td>
+                            @if(Auth::user()->tipe == 1)
                             <td>
-                                <a href="{{ url('suratmasuk/edit', $sm->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                                <a href="{{ url('suratmasuk/delete', $sm->id) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
-                                <a href="{{ asset($sm->file_masuk) }}" class="btn btn-info btn-sm"><i class="fa fa-file"></i></a>
+                                @if($sm->suratmasuk_id == null)
+                                <a href="{{ url('suratmasuk/disposisi', $sm->id) }}" class="btn btn-secondary btn-sm"><i class="fa fa-share" title="Disposisi"></i></a>
+                                Menunggu Disposisi
+                                @else
+                                <p>{{ $sm->name }}</p>
+                                @endif
+                            </td>
+                            @endif
+                            <td>
+                                @if(Auth::user()->tipe == 1)
+                                <a href="{{ url('suratmasuk/edit', $sm->id) }}" class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-edit"></i></a>
+                                <a href="{{ url('suratmasuk/delete', $sm->id) }}" class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></a>
+                                @endif
+                                <a href="{{ asset($sm->file_masuk) }}" class="btn btn-info btn-sm"><i class="fa fa-file" title="File"></i></a>
                             </td>
                         </tr>
                         @endforeach
