@@ -26,7 +26,8 @@
                                 </li>
                             </ul>
                         </div>
-                        <a href="{{ asset($instansi->file) }}" data-toggle="lightbox" data-title="Lihat Logo Instansi">
+                        <a href="{{ asset('uploads/logo/' . $instansi->file) }}" data-toggle="lightbox"
+                            data-title="Lihat Logo Instansi">
                             <center>
                                 <img id="logo" src="{{ asset('uploads/logo/' . $instansi->file) }}" alt="Logo Instansi"
                                     class="rounded" width="200"><br>
