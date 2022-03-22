@@ -1,7 +1,6 @@
 @extends('template')
 @section('sub-judul', 'Edit Instansi')
 @section('content')
-
     <section class="content pt-2">
         <div class="row">
             <div class="col-12">

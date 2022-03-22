@@ -46,6 +46,7 @@ class InstansiController extends Controller
             // }
         }
 
+
         $instansi->nama = $request->nama;
         $instansi->alamat = $request->alamat;
         $instansi->pimpinan = $request->pimpinan;

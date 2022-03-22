@@ -21,8 +21,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('klasifikasi/delete/{id}', 'KlasifikasiController@destroy');
 
     // surat masuk
-    Route::get('suratmasuk','SuratMasukController@index');
-    Route::get('suratmasuk/create','SuratMasukController@create');
+    Route::get('suratmasuk', 'SuratMasukController@index');
+    Route::get('suratmasuk/create', 'SuratMasukController@create');
     Route::post('suratmasuk/store', 'SuratMasukController@store');
     Route::get('suratmasuk/edit/{id}', 'SuratMasukController@edit');
     Route::post('suratmasuk/update/{id}', 'SuratMasukController@update');
@@ -58,5 +58,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('instansi', 'InstansiController@index');
     Route::get('instansi/show', 'InstansiController@show');
     Route::post('instansi/update/{id}', 'InstansiController@update');
-
 });
